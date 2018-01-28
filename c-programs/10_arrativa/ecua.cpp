@@ -14,7 +14,7 @@ double scanear_ecua(){
     char    incognita[C] = {'x','y','r'};
     for(int f=0;f<N;f++)
         for(int c=0;c<C;c++){
-            printf("Introduce el numero de la ecuacion %i, incognita %c: \n", f+1, incognita[C]);
+            printf("Introduce el numero de la ecuacion %i, incognita %c: \n", f+1, incognita[c]);
             scanf("%lf",&(a[f][c]));
         }
 
@@ -56,7 +56,7 @@ int diagonaliza(double a[N][C], double coef[N]){
             coef[cima] *= -1;
         }
         cima++;
-        for (int col=0; col<N; col++)
+        for (int col=0; col<N-1; col++)
             a[n][col] /= k;
         for (int f=n+1; f<N; f++){
             k = a[f][n];
@@ -73,16 +73,29 @@ int main(){
 
     scanear_ecua();
     imprimir_ecua(a);
-    double   coef[N], det=1;
+    double   coef[N], det=1,Y,X,R;
         if (!diagonaliza(a, coef)){
                     fprintf(stderr, "Rango menor que 3.\n");
                             det = 0;
                                 }
 
-            for (int i=0; i<N; i++)
-                        det *= coef[i];
 
-                printf("Determinante: %lf\n", det);
+                /* Y   ==  (a[0][1] == a[0][2]);
+                             a[1][1] *= a[0][1];
+                   R   ==  (a[1][2] -= a[1][1]);
+                   X   ==  (a[1][2] /= a[1][0]);*/
+
+
+                          (a[1][1] == a[1][2]);
+                                   Y = a[1][1];
+                            a[0][1] *= a[1][1];
+                   R   =  (a[0][2] -= a[0][1]);
+                   X   =  (a[0][2] /= a[0][0]);
+/*                   Y   =  (a[1][1]  /=  (a[1][2] -= a[1][0]));*/
+
+
+
+                printf("Las incognitas son: X = %6.2lf \n Y = %6.2lf \n", X,Y);
 
 
     return EXIT_SUCCESS;
