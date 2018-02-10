@@ -39,7 +39,6 @@ int main(){
 
     for(int f=0;f<F;f++){
 
-        /*        memset(&suma, 0, sizeof(suma));*/
         int c = 0;
         for(c;c<F;c++){
             k[f][c] = 0;
