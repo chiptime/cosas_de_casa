@@ -10,6 +10,7 @@ int main(){
     *(reserva + 1) = 7.8;
 
     free(reserva);
+    free(reserva + 1);
     return EXIT_SUCCESS;
 
 }
