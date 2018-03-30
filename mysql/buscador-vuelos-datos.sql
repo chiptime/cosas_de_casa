@@ -6,7 +6,7 @@ use buscador_vuelos_datos
 
 CREATE TABLE AEROPUERTO(codIATA CHAR(3), nombre VARCHAR(30), ciudad VARCHAR(30), pais VARCHAR(30), PRIMARY KEY (codIATA));
 
-CREATE TABLE TERMINAL(numero CHAR(1), codIATA CHAR(3),PRIMARY KEY (numero), CONSTRAINT iata_FK FOREIGN KEY (codIATA) REFERENCES AEROPUERTO(codIATA) ON UPDATE CASCADE);
+CREATE TABLE TERMINAL(numero CHAR(2), codIATA CHAR(3),PRIMARY KEY (numero), CONSTRAINT iata_FK FOREIGN KEY (codIATA) REFERENCES AEROPUERTO(codIATA) ON UPDATE CASCADE);
 
 CREATE TABLE ASIENTO(codasiento INT auto_increment, tipoclase ENUM('turista','turista_superior','business','primera'), PRIMARY KEY (codasiento));
 
