@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdio_ext.h>
 #include <stdlib.h>
+#include <string.h>
 //for mygetch
 #include <termios.h>
 #include <unistd.h>
@@ -13,14 +14,14 @@
 #define maxf (fila-1)
 #define maxc (columna-1)
 
-//#define xbola 50
-//#define ybola 15
+//#define ARRIBA  "\033[A"
+//#define ABAJO  "\033[B"
+
 
 int fila = 30;
 int columna= 100;
 int xbola = 50;
 int ybola = 15;
-
 
 void gotoxy(int x, int y){
     int MAX_SCREEN_AREA = 100;
@@ -71,6 +72,15 @@ int main() {
     int ydireccion = 1;
 
 
+    /////Palas
+
+    int xpala = 20;
+    int ypala = 10;
+
+    int xpala1 = 80;
+    int ypala1 = 10;
+
+    char flecha;
 
 
 
@@ -88,6 +98,8 @@ int main() {
 
     do{
         __fpurge(stdin);
+
+
 
         /*Dibujar marco*/
         for(int f=0; f<fila;f++) {
@@ -113,22 +125,7 @@ int main() {
 
 
 
-
-        //void movimiento_bola();
-        /*
-           gotoxy(xbola,ybola); printf("(_)");
-
-           if(xbola>=minc+4 && xbola<=maxc-1)
-           xbola--;
-           if(xbola<=maxc-1)
-           xbola++;
-
-        //arriba abajo
-        if(ybola>=minf+3 && ybola<=maxf-1)
-        ybola--;
-        if(ybola<=maxf-1)
-        ybola++;*/
-
+        //                Movimiento de la pelota
         gotoxy(xbola,ybola); printf("(_)");
 
         xbola = xbola + ( xvel * xdireccion );
@@ -142,39 +139,61 @@ int main() {
         if((ybola<=3) || (ybola>=29))
             ydireccion *= -1;
 
-        gotoxy(55,8);printf("%d , %d", xbola,ybola);
-
-        /*        if(xbola>minc+5)
-                  printf("minimo");
-        //         xbola = -xbola;
-        if(xbola=maxc-1)
-        xbola = -xbola;
-        //teclas arriba abajo
-        if(ybola=minf+3)
-        ybola = -ybola;
-        if(ybola=maxf-1)
-        printf("estas a tope");
-        //            ybola = -ybola;*/
+        gotoxy(55,8);printf("%d , %d", xbola,ybola);            // situacion de la bola
 
 
+        gotoxy(55,5);printf("%d , %d", xpala,ypala);
+                  gotoxy(xpala,ypala);
+                  printf(" ");
+                  gotoxy(xpala,ypala+1);
+                  printf(" ");
+                  gotoxy(xpala,ypala+2);
+                  printf(" ");
+                  gotoxy(xpala,ypala+3);
+                  printf(" ");
 
-        gotoxy(55,5);printf("%d , %d", x,y);
-        //movimiento de ||
-        gotoxy(x,y);
-        printf("||");
+                  gotoxy(xpala,ypala);
+                  printf("█");
+                  gotoxy(xpala,ypala+1);
+                  printf("█");
+                  gotoxy(xpala,ypala+2);
+                  printf("█");
+                  gotoxy(xpala,ypala+3);
+                  printf("█");
 
-        tecla=mygetch();
+                 tecla=mygetch();
 
-        //tecla isquierda derecha minc=0 maxc=columna-1
-        if(tecla=='a' && x>=minc+4)
-            x--;
-        if(tecla=='d' && x<=maxc-1)
-            x++;
-        //teclas arriba abajo
-        if(tecla=='w' && y>=minf+3)
-            y--;
-        if(tecla=='s' && y<=maxf-1)
-            y++;
+                  if(tecla=='w' && ypala>=minf+3)
+                  ypala--;
+                  if(tecla=='s' && ypala+3<=maxf-1)
+                  ypala++;
+
+                  gotoxy(xpala1,ypala1);
+                  printf(" ");
+                  gotoxy(xpala1,ypala1+1);
+                  printf(" ");
+                  gotoxy(xpala1,ypala1+2);
+                  printf(" ");
+                  gotoxy(xpala1,ypala1+3);
+                  printf(" ");
+
+                  gotoxy(xpala1,ypala1);
+                  printf("█");
+                  gotoxy(xpala1,ypala1+1);
+                  printf("█");
+                  gotoxy(xpala1,ypala1+2);
+                  printf("█");
+                  gotoxy(xpala1,ypala1+3);
+                  printf("█");
+
+        if (mygetch() == '\033') {
+            mygetch();
+        flecha=mygetch();
+        if(flecha=='A' && ypala1>=minf+3)
+            ypala1--;
+        if(flecha=='B' && ypala1+3<=maxf-1)
+            ypala1++;
+        }
         system("clear");
     }while(1);
 
@@ -182,4 +201,5 @@ int main() {
 }
 
 
+//        gotoxy(55,5);printf("%d , %d", x,y);                    // situacion de ||
 
