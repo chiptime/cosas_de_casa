@@ -64,8 +64,8 @@ int main() {
 
     //////bola
 
-    double xvel = 1;
-    double yvel = 1;
+    double xvel = 1.5;
+    double yvel = 1.5;
 
     int xdireccion = 1;
     int ydireccion = 1;
@@ -131,20 +131,18 @@ int main() {
 
         gotoxy(xbola,ybola); printf("(_)");
 
-  /*      xbola=xbola+1;
-        ybola=ybola+1;
-*/
         xbola = xbola + ( xvel * xdireccion );
         ybola = ybola + ( yvel * ydireccion );
 
 
 
-/*
-        if((xbola=5) || (xbola=70))
-            xdireccion *= -1;
-        if((ybola=3) || (ybola=27))
-            xdireccion *= -1;
 
+        if((xbola<=5) || (xbola>=99))
+            xdireccion *= -1;
+        if((ybola<=3) || (ybola>=29))
+            ydireccion *= -1;
+
+        gotoxy(55,8);printf("%d , %d", xbola,ybola);
 
         /*        if(xbola>minc+5)
                   printf("minimo");
