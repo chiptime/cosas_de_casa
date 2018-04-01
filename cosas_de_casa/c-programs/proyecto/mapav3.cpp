@@ -9,6 +9,8 @@
 
 #include <time.h>
 
+#include <curses.h>
+
 #define fila  30
 #define columna 100
 
@@ -44,6 +46,8 @@ int ypala = 10;
 
 int xpala1 = 80;
 int ypala1 = 10;
+
+
 
 
 
@@ -123,21 +127,19 @@ void movimiento_Bola() {
     ybola = ybola + ( yvel * ydireccion );
 
 
-    if ( ((xbola == xpala)||(xbola+1 == xpala)||(xbola+2 == xpala)) && ((ybola == ypala)||(ybola == ypala+1)||(ybola == ypala+2)||(ybola == ypala+3)) ){
+    if ( ((xbola == xpala)||(xbola+1 == xpala)||(xbola+2 == xpala)) && ((ybola == ypala)||(ybola == ypala+1)||(ybola == ypala+2)||(ybola == ypala+3)||(ybola == ypala+4)) ){
         xdireccion *= -1;
         ydireccion *= -1;
     }
-    if ( ((xbola == xpala1)||(xbola+1 == xpala1)||(xbola+2 == xpala1)) && ((ybola == ypala1)||(ybola == ypala1+1)||(ybola == ypala1+2)||(ybola == ypala1+3)) ){
+    if ( ((xbola == xpala1)||(xbola+1 == xpala1)||(xbola+2 == xpala1)) && ((ybola == ypala1)||(ybola == ypala1+1)||(ybola == ypala1+2)||(ybola == ypala1+3)||(ybola == ypala1+3)) ){
         xdireccion *= -1;
         ydireccion *= -1;
     }
 
-//    if((xbola<=5)|| (xbola+1<=5)||(xbola+2<=5)|| (xbola>=99)||(xbola+1>=99)||(xbola+2>=99)) ////hacer otras dos implicaciones logicas (_) son 3 espacios
-       if((xbola<=5)|| (xbola>=99))
-               xdireccion *= -1;
+   if((xbola<=5)|| (xbola>=99))
+        xdireccion *= -1;
     if((ybola<=3) || (ybola>=29))
         ydireccion *= -1;
-    //contra las barras
 
 
 
@@ -146,57 +148,47 @@ void movimiento_Bola() {
 }
 void teclas(){
 
-    /*    if((mygetch()=='\033')){
-          tecla=mygetch();
-
-
-          if(tecla=='w' && ypala>=minf+3)
-          ypala--;
-          if(tecla=='s' && ypala+3<=maxf-1)
-          ypala++;
-          __fpurge(stdin);
-          }*/
-
+        curs_set(0);
     if( (mygetch() == '\033')) {
 
         mygetch();// == '[';
         flecha=mygetch();
         if(flecha=='A' && ypala1>=minf+3)
             ypala1--;
-        if(flecha=='B' && ypala1+3<=maxf-1)
+        if(flecha=='B' && ypala1+4<=maxf-1)
             ypala1++;
         __fpurge(stdin);
     }
     else{
-    if (kbhit()){
-     flecha=mygetch();
+        if (kbhit()){
+            flecha=mygetch();
 
-    if(flecha=='w' && ypala>=minf+3)
-        ypala--;
-    if(flecha=='s' && ypala+3<=maxf-1)
-        ypala++;
+            if(flecha=='w' && ypala>=minf+3)
+                ypala--;
+            if(flecha=='s' && ypala+4<=maxf-1)
+                ypala++;
 
-    __fpurge(stdin);
+            __fpurge(stdin);
 
-    }
+        }
     }    //close(STDIN_FILENO);
 
-//    else
- //       ungetc('[',stdin);
+    //    else
+    //       ungetc('[',stdin);
 
-/*    flecha=mygetch();                //'\033' podria incluirlo en el nombre de 'w'
+    /*    flecha=mygetch();                //'\033' podria incluirlo en el nombre de 'w'
 
-    if(flecha=='w' && ypala>=minf+3)
-        ypala--;
-    if(flecha=='s' && ypala+3<=maxf-1)
-        ypala++;
-    __fpurge(stdin);*/
+          if(flecha=='w' && ypala>=minf+3)
+          ypala--;
+          if(flecha=='s' && ypala+3<=maxf-1)
+          ypala++;
+          __fpurge(stdin);*/
 
 
 
 }
 void pala1() {
-    gotoxy(60,60);printf("%c",tecla);
+    gotoxy(60,10);printf("%c",tecla);
     if (kbhit()){
         //      int limite;
 
@@ -219,6 +211,8 @@ void pala1() {
         printf("█");
         gotoxy(xpala,ypala+3);
         printf("█");
+        gotoxy(xpala,ypala+4);
+        printf("█");
 
         teclas();
     }
@@ -236,6 +230,8 @@ void pala2() {
         gotoxy(xpala1,ypala1+3);
         printf("█");
 
+        gotoxy(xpala1,ypala1+4);
+        printf("█");
         /*    gotoxy(xpala1,ypala1);
               printf(" ");
               gotoxy(xpala1,ypala1+1);
@@ -251,6 +247,7 @@ void pala2() {
 int main() {
     /*TODO pasar todo a double y comprobar que funcione bien*/
 
+
     char matriz[fila][columna];
 
     for(int i=0;i<fila;i++) {
@@ -263,16 +260,16 @@ int main() {
     while(1){
         system("clear");
         //        __fpurge(stdin);
-
+//        curs_set(0);
         dibujar_Marco();
         movimiento_Bola();
         pintar_pala1();
         pintar_pala2();
-        if(kbhit()){
+        //        if(kbhit()){
 
-            pala1();
-            pala2();
-        }
+        pala1();
+        pala2();
+        //      }
 
         usleep(60000);
     }
@@ -346,6 +343,8 @@ void pintar_pala1(){
     printf("█");
     gotoxy(xpala,ypala+3);
     printf("█");
+    gotoxy(xpala,ypala+4);
+    printf("█");
 }
 void pintar_pala2(){
     gotoxy(55,6);printf("%d , %d", xpala1,ypala1);
@@ -367,4 +366,7 @@ void pintar_pala2(){
     printf("█");
     gotoxy(xpala1,ypala1+3);
     printf("█");
+    gotoxy(xpala1,ypala1+4);
+    printf("█");
+
 }

@@ -16,6 +16,12 @@
 //#define xbola 50
 //#define ybola 15
 
+int fila = 30;
+int columna= 100;
+int xbola = 50;
+int ybola = 15;
+
+
 void gotoxy(int x, int y){
     int MAX_SCREEN_AREA = 100;
     char essq[MAX_SCREEN_AREA]={0}; // String variable to hold the escape sequence
@@ -35,16 +41,25 @@ int mygetch( ) {
     tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
     return ch;
 }
+/*
+   void movimiento_bola(){
+   gotoxy(xbola,ybola); printf("(_)");
+//gotoxy(xbola,ybola); printf(" ");
+ybola++;
+if(ybola > maxf){
+xbola = rand() % 50 +4;
+ybola = 4;
+}
+
+}*/
 
 int main() {
     /*TODO pasar todo a double y comprobar que funcione bien*/
-    int fila = 30;
-    int columna= 100;
+
     int x = 5;
     int y = 5;
     char tecla;
-    int xbola = 50;
-    int ybola = 15;
+
 
     char matriz[fila][columna];
 
@@ -54,8 +69,13 @@ int main() {
         }
     }
 
+
+
+
+
     do{
         __fpurge(stdin);
+     gotoxy(55,5);printf("%d , %d", x,y);
 
         /*Dibujar marco*/
         for(int f=0; f<fila;f++) {
@@ -82,69 +102,38 @@ int main() {
 
 
 
-       gotoxy(xbola,ybola); printf("(_)");
-         if((xbola>=(minc+3)) && (xbola<=maxc-1)){ //minc = 0
-                xbola--;
-         }
-        else{
-             if(xbola<=minc+3)
-                 xbola++;
-             if(xbola>=maxc-1)
-                 xbola--;
-         }
+        //void movimiento_bola();
+        /*
+           gotoxy(xbola,ybola); printf("(_)");
 
-         if((ybola>=(minf+2)) && (ybola<=maxf-1)){ //minf = 0
-/*            if(tecla=='w')
-                y--;
-            if(tecla=='s')
-                y++;*/
-        }
-        else{
-             if(ybola<=minf+2)
-                 y++;
-             if(ybola>maxf-1)
-                 y--;
-        }
+           if(xbola>=minc+4 && xbola<=maxc-1)
+           xbola--;
+           if(xbola<=maxc-1)
+           xbola++;
 
+        //arriba abajo
+        if(ybola>=minf+3 && ybola<=maxf-1)
+        ybola--;
+        if(ybola<=maxf-1)
+        ybola++;*/
+sleep(1);
+/*        gotoxy(xbola,ybola); printf("(_)");
 
-
-
-
-
-
-        gotoxy(55,5);printf("%d , %d", x,y);
-        //movimiento de ||
-        gotoxy(x,y);
-        printf("||");
-
-        tecla=mygetch();
-
-        //tecla isquierda derecha minc=0 maxc=columna-1
-         if((x>=(minc+3)) && (x<=maxc-1)){ //minc = 0
-            if(tecla=='a')
-                x--;
-           if(tecla=='d')
-                x++;
-         }else{
-             if(x<=minc+3)
-                 x++;
-             if(x>=maxc-1)
-                 x--;
-         }
+        xbola=xbola+1;
+        ybola=ybola+1;
+        if(xbola=minc+4)
+            xbola = -xbola;
+        if(xbola=maxc-1)
+            xbola = -xbola;
         //teclas arriba abajo
-        if((y>=(minf+2)) && (y<=maxf-1)){ //minf = 0
-            if(tecla=='w')
-                y--;
-            if(tecla=='s')
-                y++;
-        }
-        else{
-             if(y<=minf+2)
-                 y++;
-             if(y>maxf-1)
-                 y--;
-        }
+        if(ybola=minf+3)
+            ybola = -ybola;
+        if(ybola=maxf-1)
+            ybola = -ybola;*/
 
+x++;
+
+   
         system("clear");
     }while(1);
 
