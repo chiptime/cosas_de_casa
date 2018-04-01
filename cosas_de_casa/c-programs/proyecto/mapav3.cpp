@@ -26,12 +26,12 @@ int y = 5;
 char tecla;
 char flecha;
 
-
+char loquefalta;
 
 //////bola
 
-double xvel = 1.5;
-double yvel = 1.5;
+double xvel = 1;
+double yvel = 1;
 
 int xdireccion = 1;
 int ydireccion = 1;
@@ -44,7 +44,6 @@ int ypala = 10;
 
 int xpala1 = 80;
 int ypala1 = 10;
-
 
 
 
@@ -112,10 +111,11 @@ ybola = 4;
 void dibujar_Marco();
 
 void pintar_pala1();
+void pintar_pala2();
 
 void movimiento_Bola() {
 
-    //                Movimiento de la pelota
+    //                Movimiento de la bola
     //   gotoxy(xbola,ybola); printf("   ");
     gotoxy(xbola,ybola); printf("(_)");
 
@@ -123,28 +123,93 @@ void movimiento_Bola() {
     ybola = ybola + ( yvel * ydireccion );
 
 
-
-
-    if((xbola<=5) || (xbola>=99))
+    if ( ((xbola == xpala)||(xbola+1 == xpala)||(xbola+2 == xpala)) && ((ybola == ypala)||(ybola == ypala+1)||(ybola == ypala+2)||(ybola == ypala+3)) ){
         xdireccion *= -1;
+        ydireccion *= -1;
+    }
+    if ( ((xbola == xpala1)||(xbola+1 == xpala1)||(xbola+2 == xpala1)) && ((ybola == ypala1)||(ybola == ypala1+1)||(ybola == ypala1+2)||(ybola == ypala1+3)) ){
+        xdireccion *= -1;
+        ydireccion *= -1;
+    }
+
+//    if((xbola<=5)|| (xbola+1<=5)||(xbola+2<=5)|| (xbola>=99)||(xbola+1>=99)||(xbola+2>=99)) ////hacer otras dos implicaciones logicas (_) son 3 espacios
+       if((xbola<=5)|| (xbola>=99))
+               xdireccion *= -1;
     if((ybola<=3) || (ybola>=29))
         ydireccion *= -1;
+    //contra las barras
+
+
 
     gotoxy(55,8);printf("%d , %d", xbola,ybola);            // situacion de la bola
+    gotoxy(55,10);printf("%c", flecha);            // situacion de la bola
 }
+void teclas(){
 
-void pala1() {
+    /*    if((mygetch()=='\033')){
+          tecla=mygetch();
+
+
+          if(tecla=='w' && ypala>=minf+3)
+          ypala--;
+          if(tecla=='s' && ypala+3<=maxf-1)
+          ypala++;
+          __fpurge(stdin);
+          }*/
+
+    if( (mygetch() == '\033')) {
+
+        mygetch();// == '[';
+        flecha=mygetch();
+        if(flecha=='A' && ypala1>=minf+3)
+            ypala1--;
+        if(flecha=='B' && ypala1+3<=maxf-1)
+            ypala1++;
+        __fpurge(stdin);
+    }
+    else{
     if (kbhit()){
-        gotoxy(55,5);printf("%d , %d", xpala,ypala);
+     flecha=mygetch();
 
-        /*    gotoxy(xpala,ypala);
-              printf(" ");
-              gotoxy(xpala,ypala+1);
-              printf(" ");
-              gotoxy(xpala,ypala+2);
-              printf(" ");
-              gotoxy(xpala,ypala+3);
-              printf(" ");*/
+    if(flecha=='w' && ypala>=minf+3)
+        ypala--;
+    if(flecha=='s' && ypala+3<=maxf-1)
+        ypala++;
+
+    __fpurge(stdin);
+
+    }
+    }    //close(STDIN_FILENO);
+
+//    else
+ //       ungetc('[',stdin);
+
+/*    flecha=mygetch();                //'\033' podria incluirlo en el nombre de 'w'
+
+    if(flecha=='w' && ypala>=minf+3)
+        ypala--;
+    if(flecha=='s' && ypala+3<=maxf-1)
+        ypala++;
+    __fpurge(stdin);*/
+
+
+
+}
+void pala1() {
+    gotoxy(60,60);printf("%c",tecla);
+    if (kbhit()){
+        //      int limite;
+
+        /*        gotoxy(55,5);printf("%d , %d", xpala,ypala);
+
+                  gotoxy(xpala,ypala);
+                  printf(" ");
+                  gotoxy(xpala,ypala+1);
+                  printf(" ");
+                  gotoxy(xpala,ypala+2);
+                  printf(" ");
+                  gotoxy(xpala,ypala+3);
+                  printf(" ");*/
 
         gotoxy(xpala,ypala);
         printf("█");
@@ -155,43 +220,32 @@ void pala1() {
         gotoxy(xpala,ypala+3);
         printf("█");
 
-
-
-        tecla=mygetch();
-
-        if(tecla=='w' && ypala>=minf+3)
-            ypala--;
-        if(tecla=='s' && ypala+3<=maxf-1)
-            ypala++;
+        teclas();
     }
+
 }
 
 void pala2() {
-    gotoxy(xpala1,ypala1);
-    printf("█");
-    gotoxy(xpala1,ypala1+1);
-    printf("█");
-    gotoxy(xpala1,ypala1+2);
-    printf("█");
-    gotoxy(xpala1,ypala1+3);
-    printf("█");
+    if (kbhit()){
+        gotoxy(xpala1,ypala1);
+        printf("█");
+        gotoxy(xpala1,ypala1+1);
+        printf("█");
+        gotoxy(xpala1,ypala1+2);
+        printf("█");
+        gotoxy(xpala1,ypala1+3);
+        printf("█");
 
-    /*    gotoxy(xpala1,ypala1);
-          printf(" ");
-          gotoxy(xpala1,ypala1+1);
-          printf(" ");
-          gotoxy(xpala1,ypala1+2);
-          printf(" ");
-          gotoxy(xpala1,ypala1+3);
-          printf(" ");*/
+        /*    gotoxy(xpala1,ypala1);
+              printf(" ");
+              gotoxy(xpala1,ypala1+1);
+              printf(" ");
+              gotoxy(xpala1,ypala1+2);
+              printf(" ");
+              gotoxy(xpala1,ypala1+3);
+              printf(" ");*/
 
-    if (mygetch() == '\033') {
-        mygetch();
-        flecha=mygetch();
-        if(flecha=='A' && ypala1>=minf+3)
-            ypala1--;
-        if(flecha=='B' && ypala1+3<=maxf-1)
-            ypala1++;
+        teclas();
     }
 }
 int main() {
@@ -208,19 +262,19 @@ int main() {
 
     while(1){
         system("clear");
-        __fpurge(stdin);
+        //        __fpurge(stdin);
 
         dibujar_Marco();
         movimiento_Bola();
         pintar_pala1();
-        pala1();
+        pintar_pala2();
+        if(kbhit()){
 
-        if (kbhit()){
+            pala1();
             pala2();
         }
 
-
-        usleep(100000);
+        usleep(60000);
     }
     return 0;
 }
@@ -291,5 +345,26 @@ void pintar_pala1(){
     gotoxy(xpala,ypala+2);
     printf("█");
     gotoxy(xpala,ypala+3);
+    printf("█");
+}
+void pintar_pala2(){
+    gotoxy(55,6);printf("%d , %d", xpala1,ypala1);
+
+    /*    gotoxy(xpala,ypala);
+          printf(" ");
+          gotoxy(xpala,ypala+1);
+          printf(" ");
+          gotoxy(xpala,ypala+2);
+          printf(" ");
+          gotoxy(xpala,ypala+3);
+          printf(" ");*/
+
+    gotoxy(xpala1,ypala1);
+    printf("█");
+    gotoxy(xpala1,ypala1+1);
+    printf("█");
+    gotoxy(xpala1,ypala1+2);
+    printf("█");
+    gotoxy(xpala1,ypala1+3);
     printf("█");
 }
