@@ -1,0 +1,22 @@
+p
+{
+	margin: 10px;
+	color: blue;
+	font-size: 14pt;
+}
+
+p span div
+{
+	color: green;
+}
+p span
+{
+	font-size:10pt;
+	color:red;
+}
+
+span
+{
+	font-size:14pt;
+	color:yellow;
+}
