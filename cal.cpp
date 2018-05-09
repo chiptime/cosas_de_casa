@@ -76,12 +76,12 @@ int main(){
         {"multiplacion", &mul},
         {"division", &div}
     };
-    while(test == true){
+    while(test == true  ){ 
     printf("Operacion: ");
     scanf(" %lf %c %lf", &op1, &opera, &op2);
     test = push(op2, &datos);
     test = push(op1, &datos);
-
+    if(test == true){
     switch(opera) {
         case '+':
             push(suma,     &op);
@@ -99,20 +99,18 @@ int main(){
             printf("El operador no es correcto\n");
 
     }
-
+    }
     }
 
-    printf("%i\n", sizeof(op.data)/sizeof(int));
 
-    printf("%i\n", sizeof(datos.data)/sizeof(int));
     printf("\nToca imprimir los pop\n");
-    for(int i=0; i<=MAX; i++){
+    for(int i=0; i<MAX-3; i++){
       int selector =  pop(&op);
       double resultado = catalogo[selector].op((double) pop(&datos), (double) pop(&datos) );
 
-      printf("%s\n",catalogo[selector].nombre);
+      printf("\t\t %s\n",catalogo[selector].nombre);
 
-      printf("%5.2lf\n",resultado);
+      printf("\t\t %5.2lf\n",resultado);
 
     }
     return EXIT_SUCCESS;
