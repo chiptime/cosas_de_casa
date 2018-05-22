@@ -12,11 +12,32 @@ CREATE TABLE Bote(
 CREATE TABLE Meses(mes VARCHAR(20), num INT AUTO_INCREMENT PRIMARY KEY);
 INSERT INTO Meses VALUES('Enero', 1);
 INSERT INTO Meses(Mes) VALUES('Febrero'),('Marzo'),('Abril'),('Mayo'),('Junio'),('Julio'),('Agosto'),('Septiembre'),('Octubre'),('Noviembre'),('Diciembre');
-DROP PROCEDURE meses;
-DROP PROCEDURE dimeMES;
-DROP PROCEDURE imprimirMeses;
+/*DROP PROCEDURE meses;*/
+DROP PROCEDURE dimeMES;//
+DROP PROCEDURE imprimirMeses;//
 
+delimiter //
+CREATE PROCEDURE dimeMES (IN _numero INT)
 
+BEGIN
+/*DECLARE _numero INT DEFAULT 1;*/
+/*SET _numero = 1;*/
+       SELECT mes FROM Meses WHERE num = _numero;
+END//
+delimiter;
+//
+
+CALL dimeMES(2);//
+
+delimiter //
+CREATE PROCEDURE imprimirMeses(/*OUT mes VARCHAR(30)*/)
+BEGIN
+	SELECT * FROM Meses;
+END//
+delimiter;
+//
+
+CALL imprimirMeses;
 /*SET @bote = 0;*/
 /*
 delimiter $$/*//*/
@@ -89,21 +110,4 @@ IF (numMes = 1) THEN RETURN CONCAT('El mes es: Enero', numMes); ENDIF;
 
 */
 
-delimiter //
-CREATE PROCEDURE dimeMES (/*IN*/ Num INT)
-BEGIN
-       SELECT mes FROM Meses WHERE num = Num;
-END//
-delimiter;
 
-CALL dimeMES(2);
-
-delimiter //
-CREATE PROCEDURE imprimirMeses(/*OUT mes VARCHAR(30)*/)
-BEGIN
-	SELECT * FROM Meses;
-END//
-delimiter;
-//
-
-CALL imprimirMeses;
