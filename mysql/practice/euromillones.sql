@@ -8,8 +8,17 @@ CREATE TABLE Bote(
 		  Cantidad int,
 		  PRIMARY KEY (ID)
 		 );
-/*SET @bote = 0;*/
 
+CREATE TABLE Meses(mes VARCHAR(20), num INT AUTO_INCREMENT PRIMARY KEY);
+INSERT INTO Meses VALUES('Enero', 1);
+INSERT INTO Meses(Mes) VALUES('Febrero'),('Marzo'),('Abril'),('Mayo'),('Junio'),('Julio'),('Agosto'),('Septiembre'),('Octubre'),('Noviembre'),('Diciembre');
+DROP PROCEDURE meses;
+DROP PROCEDURE dimeMES;
+DROP PROCEDURE imprimirMeses;
+
+
+/*SET @bote = 0;*/
+/*
 delimiter $$/*//*/
 CREATE PROCEDURE doreapeat(p1 INT)
 BEGIN
@@ -24,7 +33,7 @@ delimiter;
 CALL dorepeat(1000);
 
 SELECT @x;
-
+*/
 
 /*
 delimiter $$
@@ -49,11 +58,12 @@ INSERT INTO Bote VALUES (1, 200);
 INSERT INTO Bote VALUES (2, 50);
 INSERT INTO Bote VALUES (3, 2);
 
+/*CREATE TABLE meses (mes varchar[20]);*/
 
 
 
 
-
+/*
 CREATE FUNCTION hello (s CHAR(20))
 RETURNS CHAR(50) DETERMINISTIC
 RETURN CONCAT('Hello, ',s,'!');
@@ -63,12 +73,37 @@ SELECT hello('world');
 +----------------+
 | Hello, world!  |
 +----------------+
+NUM('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre') */
+/*
+delimiter //
+CREATE FUNCTION meses(numMes INT)
+RETURNS VARCHAR(50) DETERMINISTIC
+IF (numMes = 1) THEN RETURN CONCAT('El mes es: Enero', numMes); ENDIF;
 
-CREATE FUNCTION meses(numMes TINYINT)
-DECLARE mes ENUM('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-IF(mes == numMes)
-RETURNS CONCAT('El mes es: ',mes);
 
+	ELSEIF (numMes = 2) THEN
+		RETURN CONCAT('El mes es: Febrero', numMes)
+	ELSE
+		RETURN CONCAT('El mes es: Marzo', numMes)
+//
 
+*/
 
+delimiter //
+CREATE PROCEDURE dimeMES (/*IN*/ Num INT)
+BEGIN
+       SELECT mes FROM Meses WHERE num = Num;
+END//
+delimiter;
 
+CALL dimeMES(2);
+
+delimiter //
+CREATE PROCEDURE imprimirMeses(/*OUT mes VARCHAR(30)*/)
+BEGIN
+	SELECT * FROM Meses;
+END//
+delimiter;
+//
+
+CALL imprimirMeses;
