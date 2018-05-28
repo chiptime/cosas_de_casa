@@ -29,6 +29,18 @@ delimiter;
 
 CALL dimeMES(2);//
 
+DROP FUNCTION IF EXISTS dameMES //
+
+CREATE FUNCTION dameMES (n INT)
+RETURNS VARCHAR(20) DETERMINISTIC
+BEGIN
+DECLARE el_mes VARCHAR(20) DEFAULT "";
+SELECT mes INTO el_mes FROM Meses WHERE num = n;
+RETURN el_mes;
+END;//
+
+SELECT dameMES(6);//
+
 delimiter //
 CREATE PROCEDURE imprimirMeses(/*OUT mes VARCHAR(30)*/)
 BEGIN
@@ -36,6 +48,40 @@ BEGIN
 END//
 delimiter;
 //
+
+DROP PROCEDURE IF EXISTS todosLosMeses //
+CREATE PROCEDURE todosLosMeses()
+BEGIN
+  DECLARE i INT DEFAULT 0;
+  WHILE i < 3 DO
+   SET i = i + 1;
+	SELECT mes FROM Meses WHERE num = i;
+  END WHILE;
+END//
+
+
+
+DROP FUNCTION IF EXISTS funMeses //
+CREATE FUNCTION funMeses()
+RETURNS VARCHAR(20) DETERMINISTIC
+BEGIN
+DECLARE el_mes VARCHAR(20) DEFAULT "";
+DECLARE 
+SELECT mes, num FROM Meses WHERE num
+RETURN ;
+END//
+
+CALL funMeses;//
+
+
+
+DROP PROCEDURE IF EXISTS tomaMeses //
+CREATE PROCEDURE tomaMeses()
+BEGIN
+SELECT mes, num FROM Meses;
+END//
+
+CALL tomaMeses;//
 
 CALL imprimirMeses;
 /*SET @bote = 0;*/
@@ -110,4 +156,25 @@ IF (numMes = 1) THEN RETURN CONCAT('El mes es: Enero', numMes); ENDIF;
 
 */
 
+EJERCICIOS
+
+Nos piden hacer un procedimiento :
+actualizacion limite credito(){
+	crear tabla limite credito(copiar la tabla original para evitar pisarlo meter fecha, codigocliente, incrementa,incremento total)
+incrementar en un porcentaje del 15%;
+Incrementar SOLO a los clientes mas antiguos a 2010;
+LimiteCredito   %   IncrementoTotal
+15 000          10    16 500
+
+
+}
+
+Facturacion (){
+
+Tabla Facturas(crea una lista de facturas)
+
+ID(codigoFACTURA)   codCliente     codPedidos     PrecioTotal
+}
+
+select Empleados.Nombre, Empleados.Apellido1, Empleados.Puesto from Empleados, Clientes where Empleados.CodigoEmpleado not in (select CodigoEmpleadoRepVentas from Clientes) group by Empleados.CodigoEmpleado;
 
